@@ -55,19 +55,19 @@ export default {
 <style lang="scss" scoped>
 .message-create-area {
   box-shadow: 1px -5px 20px 2px #9b7f81;
-  position: abcolute;
   bottom: 0;
   padding: 1vh 0;
   width: 100%;
   z-index: 10;
-
   .container {
     z-index: 15;
   }
 }
 
 .create-description {
+  padding-bottom: 1vh;
   margin-bottom: 1vh;
+  border-bottom: 1px dashed gray;
 
   h3 {
     font-weight: bold;
