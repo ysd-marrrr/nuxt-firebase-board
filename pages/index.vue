@@ -1,68 +1,31 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        nuxt-firebase-board
-      </h1>
-      <h2 class="subtitle">
-        A board sample with Nuxt.js + Firebase(Auth, Cloud Firestore)
-      </h2>
-      <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+  <div class="main-page-wrapper">
+    <Introduction />
+    <Messages />
+    <MessageCreateArea />
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import Introduction from '~/components/organisms/Introduction.vue'
+import Messages from '~/components/organisms/Messages.vue'
+import MessageCreateArea from '~/components/organisms/MessageCreateArea.vue'
 
 export default {
   components: {
-    Logo
+    Introduction,
+    Messages,
+    MessageCreateArea
   }
 }
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
+.main-page-wrapper {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+  flex-direction: column;
+  position: absolute;
+  height: 100%;
+  width: 100%;
 }
 </style>
