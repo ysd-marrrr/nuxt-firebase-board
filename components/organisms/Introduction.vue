@@ -16,5 +16,9 @@
 <style lang="scss" scoped>
 .introduction {
   z-index: 10;
+
+  .user-box {
+    margin: 0;
+  }
 }
 </style>

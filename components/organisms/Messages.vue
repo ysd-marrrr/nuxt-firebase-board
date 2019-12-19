@@ -6,7 +6,7 @@
           <div class="column is-2">なまえ{{ idx }}</div>
           <div class="column is-8">いいたいこと</div>
           <div class="column is-2">
-            <div class="buttons">
+            <div v-if="$store.state.isLoggedin" class="buttons">
               <button class="button">編集</button>
               <button class="button is-danger">削除</button>
             </div>
