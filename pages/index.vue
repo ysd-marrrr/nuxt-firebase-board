@@ -27,5 +27,6 @@ export default {
   position: absolute;
   height: 100%;
   width: 100%;
+  overflow-y: none;
 }
 </style>

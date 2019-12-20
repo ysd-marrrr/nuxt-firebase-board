@@ -17,11 +17,24 @@
   </div>
 </template>
 
+<script>
+export default {
+  mounted() {
+    this.$store.dispatch('firestoreMessageCheck')
+  },
+  methods: {
+    displayMesssageUpdate() {
+      this.$store.dispatch('firestoreMessageCheck')
+    }
+  }
+}
+</script>
+
 <style lang="scss" scoped>
 .messages {
   flex: 1;
   position: relative;
-  overflow: scroll;
+  overflow-y: scroll;
   z-index: 0;
   padding: 10px 0;
 }

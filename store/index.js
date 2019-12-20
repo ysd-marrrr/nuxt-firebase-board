@@ -1,11 +1,12 @@
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
-import '~/plugins/firebase-custom.js'
+import { firestoreDb } from '~/plugins/firebase-custom.js'
 
 export const state = () => ({
   isLoggedin: false,
   firebaseUid: null,
-  userName: null
+  userName: null,
+  displayMessages: null
 })
 
 export const mutations = {
@@ -21,6 +22,9 @@ export const mutations = {
   },
   saveUser(state, payload) {
     state.counter = payload.number
+  },
+  updateDisplayMessage(state, payload) {
+    state.displayMessages = payload
   }
 }
 
@@ -45,5 +49,24 @@ export const actions = {
         commit('deleteAuthInfo')
       }
     })
+  },
+  firestoreMessageCheck({ dispatch, commit }) {
+    const recvMessages = []
+
+    firestoreDb
+      .collection('board1')
+      .get()
+      .then((querySnapshot) => {
+        // Firestoreからやってきたデータを扱いやすい形に変換する
+        querySnapshot.forEach(function(doc) {
+          recvMessages.push(doc.data())
+        })
+      })
+      .catch((error) => {
+        console.error('Error getting document:', error)
+      })
+      .finally(function() {
+        commit('updateDisplayMessage', recvMessages)
+      })
   }
 }
