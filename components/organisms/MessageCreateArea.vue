@@ -17,6 +17,7 @@
           <div class="column is-2">{{ $store.state.userName }}</div>
           <div class="column is-8">
             <input
+              v-model="inputtedMessage"
               class="input"
               type="text"
               placeholder="なにかいいたいことを入れてみましょう"
@@ -24,11 +25,18 @@
           </div>
           <div class="column is-2">
             <div class="buttons">
-              <button class="button is-primary">投稿！</button>
+              <button @click="addMessage" class="button is-primary">
+                投稿！
+              </button>
               <button @click="signOut" class="button is-danger">
                 ログアウト
               </button>
             </div>
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column is-full">
+            投稿済
           </div>
         </div>
       </div>
@@ -38,6 +46,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      inputtedMessage: ''
+    }
+  },
   mounted() {
     this.$store.dispatch('twitterAuthStateChanged')
   },
@@ -47,6 +60,11 @@ export default {
     },
     signOut() {
       this.$store.dispatch('twitterSignOut')
+    },
+    addMessage() {
+      this.$store.dispatch('firestoreMessageAdd', {
+        messageText: this.inputtedMessage
+      })
     }
   }
 }

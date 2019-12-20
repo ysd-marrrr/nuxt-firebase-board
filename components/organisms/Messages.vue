@@ -1,12 +1,21 @@
 <template>
   <div class="columns is-multiline messages">
     <div class="container">
-      <div v-for="idx in Number(100)" :key="idx" class="column is-full">
+      <div
+        v-for="line in $store.state.displayMessages"
+        :key="line.id"
+        class="column is-full"
+      >
         <div class="columns message-line message-1 is-vcentered">
-          <div class="column is-2">なまえ{{ idx }}</div>
-          <div class="column is-8">いいたいこと</div>
+          <div class="column is-2">{{ line.data.userName }}</div>
+          <div class="column is-8">{{ line.data.comment }}</div>
           <div class="column is-2">
-            <div v-if="$store.state.isLoggedin" class="buttons">
+            <div
+              v-if="
+                $store.state.isLoggedin && $store.state.firebaseUid === line.id
+              "
+              class="buttons"
+            >
               <button class="button">編集</button>
               <button class="button is-danger">削除</button>
             </div>

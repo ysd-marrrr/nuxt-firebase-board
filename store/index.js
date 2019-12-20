@@ -6,7 +6,8 @@ export const state = () => ({
   isLoggedin: false,
   firebaseUid: null,
   userName: null,
-  displayMessages: null
+  displayMessages: null,
+  isPosted: false
 })
 
 export const mutations = {
@@ -50,7 +51,7 @@ export const actions = {
       }
     })
   },
-  firestoreMessageCheck({ dispatch, commit }) {
+  firestoreMessageCheck({ commit }) {
     const recvMessages = []
 
     firestoreDb
@@ -59,14 +60,34 @@ export const actions = {
       .then((querySnapshot) => {
         // Firestoreからやってきたデータを扱いやすい形に変換する
         querySnapshot.forEach(function(doc) {
-          recvMessages.push(doc.data())
+          recvMessages.push({ id: doc.id, data: doc.data() })
         })
       })
       .catch((error) => {
         console.error('Error getting document:', error)
       })
       .finally(function() {
+        // 成功した場合はメッセージのリストを、失敗したときは空のリストを使って表示させる
+        console.log(recvMessages)
         commit('updateDisplayMessage', recvMessages)
+      })
+  },
+  firestoreMessageAdd({ state, commit }, payload) {
+    const postedDate = new Date()
+    const postedTimestamp = Math.floor(postedDate.getTime() / 1000)
+    firestoreDb
+      .collection('board1')
+      .doc(state.firebaseUid)
+      .set({
+        userName: state.userName,
+        comment: payload.messageText,
+        date: postedTimestamp
+      })
+      .then(() => {
+        console.log('Document successfully written!')
+      })
+      .catch((error) => {
+        console.error('Error writing document: ', error)
       })
   }
 }
