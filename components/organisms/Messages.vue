@@ -17,7 +17,9 @@
               class="buttons"
             >
               <button class="button">編集</button>
-              <button class="button is-danger">削除</button>
+              <button @click="deleteMessage" class="button is-danger">
+                削除
+              </button>
             </div>
           </div>
         </div>
@@ -34,6 +36,11 @@ export default {
   methods: {
     displayMesssageUpdate() {
       this.$store.dispatch('firestoreMessageCheck')
+    },
+    deleteMessage() {
+      if (window.confirm('投稿したコメントを削除します')) {
+        this.$store.dispatch('firestoreMessageDelete')
+      }
     }
   }
 }

@@ -20,12 +20,16 @@ export const mutations = {
     state.isLoggedin = false
     state.firebaseUid = null
     state.userName = null
+    state.isPosted = false
   },
   saveUser(state, payload) {
     state.counter = payload.number
   },
   updateDisplayMessage(state, payload) {
     state.displayMessages = payload
+  },
+  setPosted(state, payload) {
+    state.isPosted = payload
   }
 }
 
@@ -51,7 +55,7 @@ export const actions = {
       }
     })
   },
-  firestoreMessageCheck({ commit }) {
+  firestoreMessageCheck({ state, commit }) {
     const recvMessages = []
 
     firestoreDb
@@ -61,6 +65,11 @@ export const actions = {
         // Firestoreからやってきたデータを扱いやすい形に変換する
         querySnapshot.forEach(function(doc) {
           recvMessages.push({ id: doc.id, data: doc.data() })
+
+          // 前に投稿したものがある場合は投稿フォームを隠す
+          if (doc.id === state.firebaseUid) {
+            commit('setPosted', true)
+          }
         })
       })
       .catch((error) => {
@@ -85,9 +94,31 @@ export const actions = {
       })
       .then(() => {
         console.log('Document successfully written!')
+        commit('setPosted', true)
       })
       .catch((error) => {
         console.error('Error writing document: ', error)
+      })
+      .finally(() => {
+        // 成功しようが失敗しようが最新の状態を取得する
+        this.dispatch('firestoreMessageCheck')
+      })
+  },
+  firestoreMessageDelete({ state, commit }) {
+    firestoreDb
+      .collection('board1')
+      .doc(state.firebaseUid)
+      .delete()
+      .then(function() {
+        console.log('Document successfully deleted!')
+        commit('setPosted', false)
+      })
+      .catch(function(error) {
+        console.error('Error removing document: ', error)
+      })
+      .finally(() => {
+        // 成功しようが失敗しようが最新の状態を取得する
+        this.dispatch('firestoreMessageCheck')
       })
   }
 }

@@ -2,6 +2,9 @@
   <div class="message-create-area">
     <div class="container">
       <div v-if="!$store.state.isLoggedin">
+        <p>
+          ログインするとここに<strong>ひとこと</strong>投稿できるようになります。<br />Twitterアカウントはこのサービスのログインのみに使用し、勝手にTwitterに投稿したりフォローしたりしません。
+        </p>
         <button @click="signinWithTwitter" class="button is-info is-fullwidth">
           Twitterアカウントでログイン
         </button>
@@ -28,15 +31,7 @@
               <button @click="addMessage" class="button is-primary">
                 投稿！
               </button>
-              <button @click="signOut" class="button is-danger">
-                ログアウト
-              </button>
             </div>
-          </div>
-        </div>
-        <div class="columns">
-          <div class="column is-full">
-            投稿済
           </div>
         </div>
       </div>
@@ -57,9 +52,6 @@ export default {
   methods: {
     signinWithTwitter() {
       this.$store.dispatch('twitterSignIn')
-    },
-    signOut() {
-      this.$store.dispatch('twitterSignOut')
     },
     addMessage() {
       this.$store.dispatch('firestoreMessageAdd', {
