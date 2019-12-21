@@ -13,10 +13,10 @@
         <div class="create-description">
           <h3>メッセージを投稿する</h3>
           <p>
-            新規投稿は1度きりです。投稿した後は「編集するか」「削除して新しい投稿をするか」のいずれかになります。
+            新規投稿は1度きりです。新しい内容を投稿したい場合は前の投稿を削除してください。
           </p>
         </div>
-        <div class="columns is-vcentered">
+        <div v-if="!$store.state.isPosted" class="columns is-vcentered">
           <div class="column is-2">{{ $store.state.userName }}</div>
           <div class="column is-8">
             <input

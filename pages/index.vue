@@ -2,7 +2,7 @@
   <div class="main-page-wrapper">
     <Introduction />
     <Messages />
-    <MessageCreateArea v-if="!$store.state.isPosted" />
+    <MessageCreateArea />
   </div>
 </template>
 

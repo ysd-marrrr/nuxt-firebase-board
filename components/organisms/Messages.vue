@@ -16,7 +16,6 @@
               "
               class="buttons"
             >
-              <button class="button">編集</button>
               <button @click="deleteMessage" class="button is-danger">
                 削除
               </button>
