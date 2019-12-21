@@ -6,7 +6,7 @@
         :key="line.id"
         class="column is-full"
       >
-        <div class="columns message-line message-1 is-vcentered">
+        <div class="columns message-line is-vcentered">
           <div class="column is-2">{{ line.data.userName }}</div>
           <div class="column is-8">{{ line.data.comment }}</div>
           <div class="column is-2">
@@ -21,6 +21,17 @@
               </button>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="column is-full is-centered">
+        <div class="buttons">
+          <button @click="writeTestData" class="button">
+            私用 関係者以外立ち入り禁止
+          </button>
+          <button @click="writeTestData" class="button is-danger">
+            Delete something
+          </button>
         </div>
       </div>
     </div>
@@ -40,6 +51,14 @@ export default {
       if (window.confirm('投稿したコメントを削除します')) {
         this.$store.dispatch('firestoreMessageDelete')
       }
+    },
+    writeTestData() {
+      this.$store.dispatch('firestoreWrite', {
+        uid: 'abracadabra',
+        userName: 'hoge',
+        comment: 'Improper comment!',
+        date: 0
+      })
     }
   }
 }

@@ -1,5 +1,6 @@
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
+import 'firebase/firestore'
 import { firestoreDb } from '~/plugins/firebase-custom.js'
 
 export const state = () => ({
@@ -42,7 +43,7 @@ export const actions = {
     firebase.auth().signOut()
     dispatch('twitterAuthStateChanged')
   },
-  twitterAuthStateChanged({ dispatch, commit }) {
+  twitterAuthStateChanged({ commit }) {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         const { displayName, uid } = user
@@ -77,20 +78,26 @@ export const actions = {
       })
       .finally(function() {
         // 成功した場合はメッセージのリストを、失敗したときは空のリストを使って表示させる
-        console.log(recvMessages)
         commit('updateDisplayMessage', recvMessages)
       })
   },
-  firestoreMessageAdd({ state, commit }, payload) {
-    const postedDate = new Date()
-    const postedTimestamp = Math.floor(postedDate.getTime() / 1000)
+  firestoreMessageAdd({ state, dispatch }, payload) {
+    dispatch('firestoreWrite', {
+      uid: state.firebaseUid,
+      userName: state.userName,
+      comment: payload.messageText,
+      date: firebase.firestore.FieldValue.serverTimestamp()
+    })
+  },
+
+  firestoreWrite({ commit }, payload) {
     firestoreDb
       .collection('board1')
-      .doc(state.firebaseUid)
+      .doc(payload.uid)
       .set({
-        userName: state.userName,
-        comment: payload.messageText,
-        date: postedTimestamp
+        userName: payload.userName,
+        comment: payload.comment,
+        date: payload.date
       })
       .then(() => {
         console.log('Document successfully written!')
@@ -112,6 +119,22 @@ export const actions = {
       .then(function() {
         console.log('Document successfully deleted!')
         commit('setPosted', false)
+      })
+      .catch(function(error) {
+        console.error('Error removing document: ', error)
+      })
+      .finally(() => {
+        // 成功しようが失敗しようが最新の状態を取得する
+        this.dispatch('firestoreMessageCheck')
+      })
+  },
+  firestoreTestdataDelete() {
+    firestoreDb
+      .collection('board1')
+      .doc('hoge')
+      .delete()
+      .then(function() {
+        console.log('Document successfully deleted!')
       })
       .catch(function(error) {
         console.error('Error removing document: ', error)
