@@ -9,9 +9,9 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <button
-            @click="signOut"
             v-if="$store.state.isLoggedin"
             class="button is-danger"
+            @click="signOut"
           >
             ログアウト
           </button>
@@ -21,16 +21,14 @@
     <section class="hero is-primary hide-on-mobile">
       <div class="hero-body">
         <div class="container">
-          <h1 class="title">
-            みんなのメモ帳
-          </h1>
+          <h1 class="title">みんなのメモ帳</h1>
           <h2 class="subtitle is-hidden-mobile">
             Twitterユーザーが「一つだけ」コメントを残せるサービスです。閲覧するだけならアカウント不要!!
           </h2>
           <button
-            @click="signOut"
             v-if="$store.state.isLoggedin"
             class="button is-danger"
+            @click="signOut"
           >
             ログアウト
           </button>
@@ -45,8 +43,8 @@ export default {
   methods: {
     signOut() {
       this.$store.dispatch('twitterSignOut')
-    }
-  }
+    },
+  },
 }
 </script>
 

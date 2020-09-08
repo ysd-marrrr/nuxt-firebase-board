@@ -8,7 +8,7 @@ export const state = () => ({
   firebaseUid: null,
   userName: null,
   displayMessages: null,
-  isPosted: false
+  isPosted: false,
 })
 
 export const mutations = {
@@ -31,7 +31,7 @@ export const mutations = {
   },
   setPosted(state, payload) {
     state.isPosted = payload
-  }
+  },
 }
 
 export const actions = {
@@ -49,7 +49,7 @@ export const actions = {
         const { displayName, uid } = user
         commit('storeAuthInfo', {
           userName: displayName,
-          firebaseUid: uid
+          firebaseUid: uid,
         })
       } else {
         commit('deleteAuthInfo')
@@ -64,7 +64,7 @@ export const actions = {
       .get()
       .then((querySnapshot) => {
         // Firestoreからやってきたデータを扱いやすい形に変換する
-        querySnapshot.forEach(function(doc) {
+        querySnapshot.forEach(function (doc) {
           recvMessages.push({ id: doc.id, data: doc.data() })
 
           // 前に投稿したものがある場合は投稿フォームを隠す
@@ -76,7 +76,7 @@ export const actions = {
       .catch((error) => {
         console.error('Error getting document:', error)
       })
-      .finally(function() {
+      .finally(function () {
         // 成功した場合はメッセージのリストを、失敗したときは空のリストを使って表示させる
         commit('updateDisplayMessage', recvMessages)
       })
@@ -86,7 +86,7 @@ export const actions = {
       uid: state.firebaseUid,
       userName: state.userName,
       comment: payload.messageText,
-      date: firebase.firestore.FieldValue.serverTimestamp()
+      date: firebase.firestore.FieldValue.serverTimestamp(),
     })
   },
 
@@ -97,7 +97,7 @@ export const actions = {
       .set({
         userName: payload.userName,
         comment: payload.comment,
-        date: payload.date
+        date: payload.date,
       })
       .then(() => {
         console.log('Document successfully written!')
@@ -116,11 +116,11 @@ export const actions = {
       .collection('board1')
       .doc(state.firebaseUid)
       .delete()
-      .then(function() {
+      .then(function () {
         console.log('Document successfully deleted!')
         commit('setPosted', false)
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.error('Error removing document: ', error)
       })
       .finally(() => {
@@ -133,15 +133,15 @@ export const actions = {
       .collection('board1')
       .doc('hoge')
       .delete()
-      .then(function() {
+      .then(function () {
         console.log('Document successfully deleted!')
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.error('Error removing document: ', error)
       })
       .finally(() => {
         // 成功しようが失敗しようが最新の状態を取得する
         this.dispatch('firestoreMessageCheck')
       })
-  }
+  },
 }
