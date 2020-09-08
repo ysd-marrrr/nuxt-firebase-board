@@ -16,7 +16,7 @@
               "
               class="buttons"
             >
-              <button @click="deleteMessage" class="button is-danger">
+              <button class="button is-danger" @click="deleteMessage">
                 削除
               </button>
             </div>
@@ -26,10 +26,10 @@
 
       <div class="column is-full is-centered">
         <div class="buttons">
-          <button @click="writeTestData" class="button">
+          <button class="button" @click="writeTestData">
             私用 関係者以外立ち入り禁止
           </button>
-          <button @click="writeTestData" class="button is-danger">
+          <button class="button is-danger" @click="writeTestData">
             Delete something
           </button>
         </div>
@@ -57,10 +57,13 @@ export default {
         uid: 'abracadabra',
         userName: 'hoge',
         comment: 'Improper comment!',
-        date: 0
+        date: 0,
       })
-    }
-  }
+    },
+    deleteTestData() {
+      this.$store.dispatch('firestoreTestdataDelete')
+    },
+  },
 }
 </script>
 

@@ -15,8 +15,8 @@ export default {
   components: {
     Introduction,
     Messages,
-    MessageCreateArea
-  }
+    MessageCreateArea,
+  },
 }
 </script>
 

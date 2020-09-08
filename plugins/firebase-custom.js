@@ -17,7 +17,7 @@ const firebaseConfig = {
   storageBucket: process.env.FB_STORAGE_BUCKET,
   messagingSenderId: process.env.FB_MESSAGING_SENDER_ID,
   appId: process.env.FB_APPID,
-  measurementId: process.env.FB_MEASUREMENTID
+  measurementId: process.env.FB_MEASUREMENTID,
 }
 
 firebase.initializeApp(firebaseConfig)

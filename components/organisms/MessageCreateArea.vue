@@ -5,7 +5,7 @@
         <p>
           ログインするとここに<strong>ひとこと</strong>投稿できるようになります。<br />Twitterアカウントはこのサービスのログインのみに使用し、勝手にTwitterに投稿したりフォローしたりしません。
         </p>
-        <button @click="signinWithTwitter" class="button is-info is-fullwidth">
+        <button class="button is-info is-fullwidth" @click="signinWithTwitter">
           Twitterアカウントでログイン
         </button>
       </div>
@@ -28,7 +28,7 @@
           </div>
           <div class="column is-2">
             <div class="buttons">
-              <button @click="addMessage" class="button is-primary">
+              <button class="button is-primary" @click="addMessage">
                 投稿！
               </button>
             </div>
@@ -43,7 +43,7 @@
 export default {
   data() {
     return {
-      inputtedMessage: ''
+      inputtedMessage: '',
     }
   },
   mounted() {
@@ -55,10 +55,10 @@ export default {
     },
     addMessage() {
       this.$store.dispatch('firestoreMessageAdd', {
-        messageText: this.inputtedMessage
+        messageText: this.inputtedMessage,
       })
-    }
-  }
+    },
+  },
 }
 </script>
 
